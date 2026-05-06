@@ -29,3 +29,4 @@
         Header set Cache-Control "max-age=31536000, public"
     </filesMatch>
 </IfModule>
+php_value max_input_vars 5000

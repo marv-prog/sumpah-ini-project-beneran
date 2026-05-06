@@ -21,12 +21,15 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
+       foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(config( 'app.shop_multishop' ) && config( 'app.shop_registration' ) ? '/admin' : airoute( 'aimeos_shop_account' ));
+                if (Auth::user()->superuser == 1) {
+                    return redirect()->intended('/admin');
+                }
+                 return redirect()->intended('/'); 
             }
         }
-
+        
         return $next($request);
     }
 }
